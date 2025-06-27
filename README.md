@@ -2,28 +2,14 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+이 저장소는 기존의 저장소들과 달리 **클린 코드를 지향**하며 작성된 프로젝트입니다.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Frontend**
+  - Faxios 사용
+  - Sass 사용
 
-## Customize configuration
+- **Backend**
+  - Spring Boot 기반
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+  코드의 **가독성**과 **유지보수성**을 높이기 위해  
+  구조와 스타일링에 신경 썼습니다.
