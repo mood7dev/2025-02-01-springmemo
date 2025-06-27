@@ -18,8 +18,10 @@ class httpService {
   }
 
   // 메모 삭제 (DELETE)
-  async delMemo(memoId) {
-    console.log("delMemo - memoId:", memoId);
+  async delMemo(params) {
+    console.log("delMemo - params", params);
+    const res = await axios.delete("/memo", { params });
+    return res.data;
   }
 
   // 메모 리스트 조회 (GET)
