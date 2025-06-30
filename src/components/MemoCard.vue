@@ -1,18 +1,8 @@
 <script setup>
-import httpService from "@/services/HttpService";
-
 const props = defineProps({
   item: Object,
+  deleteItem: Function,
 });
-
-const remove = () => {
-  console.log("삭제할 ID:", props.item.id);
-  if (confirm("삭제하시겠습니까?")) {
-    console.log("삭제");
-    const params = { memo_id: props.item.id };
-    const data = httpService.delMemo(params);
-  }
-};
 </script>
 
 <template>
@@ -26,9 +16,12 @@ const remove = () => {
         <div class="d-flex justify-content-between">
           <b>{{ props.item.title }}</b>
           <div>
-            <span role="button" @click.prevent.stop="remove(props.item.id)"
-              >삭제</span
+            <span
+              role="button"
+              @click.prevent="$emit('deleteItem', props.item.id)"
             >
+              삭제
+            </span>
           </div>
         </div>
       </div>

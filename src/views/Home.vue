@@ -12,21 +12,41 @@ onMounted(() => {
   getItems();
 });
 
-const getItems = async (param) => {
-  const data = await httpService.getMemoList({ param });
+const getItems = async (params) => {
+  const data = await httpService.getMemoList({ params });
   state.memos = data.resultData;
   console.log("state.memos :", state.memos);
+};
+
+const removeItem = async (id) => {
+  console.log("removeItem: ", id);
+
+  if (confirm("삭제하시겠습니까?")) {
+    console.log("삭제");
+    const params = { memo_id: id };
+    const data = await httpService.delMemo(params);
+    if (data.resultData === 1) {
+      //getItems({});
+      const deleteIdx = state.memos.findIndex((item) => item.id === id);
+      if (deleteIdx >= 0) {
+        state.memos.splice(deleteIdx, 1);
+      }
+    }
+  }
 };
 </script>
 
 <template>
   <div class="memo-list">
-    <MemoCard v-for="m in state.memos" :item="m" :key="m.id" />
-
-    <router-link to="/memos/add" class="add btn btn-light">
-      + 추가하기
-    </router-link>
+    <router-link to="add" class="add btn btn-light"> + 추가하기 </router-link>
   </div>
+
+  <MemoCard
+    @delete-item="removeItem"
+    v-for="m in state.memos"
+    :item="m"
+    :key="m.id"
+  />
 </template>
 
 <style lang="scss" scoped>
