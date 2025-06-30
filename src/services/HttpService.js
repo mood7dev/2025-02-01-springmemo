@@ -4,17 +4,24 @@ axios.defaults.baseURL = "http://localhost:8080/api";
 //객체화 한 걸 리턴
 class httpService {
   // 메모 저장 (POST)
-  async saveMemo(item) {
-    console.log("item: ", item);
+  async save(item) {
+    console.log("save - item: ", item);
+    const res = await axios.post("/memo", item);
+    return res.data;
   }
 
-  async getItems(parms) {
-    console.log("parms: ", parms);
+  async findById(id) {
+    console.log("findById - id:", id);
+    const res = await axios.get(`/memo/${id}`);
+    console.log("findById = res.data:", res.data);
+    return res.data;
   }
 
   // 메모 수정 (PUT)
-  async updateMemo(item) {
+  async modify(item) {
     console.log("updateMemo - item: ", item);
+    const res = await axios.put("/memo", item);
+    return res.data;
   }
 
   // 메모 삭제 (DELETE)

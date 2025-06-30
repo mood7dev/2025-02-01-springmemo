@@ -12,6 +12,10 @@ const router = createRouter({
       path: "/add",
       component: () => import("@/views/From.vue"),
     },
+    {
+      path: "/mod/:memoId",
+      component: () => import("@/views/From.vue"),
+    },
   ],
 });
 

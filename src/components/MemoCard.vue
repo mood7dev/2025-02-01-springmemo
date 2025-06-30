@@ -6,11 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <router-link
-    :key="props.item.id"
-    :to="`/memos/${props.item.id}`"
-    class="item"
-  >
+  <router-link :key="props.item.id" :to="`/mod/${props.item.id}`" class="item">
     <div class="d-flex pt-3">
       <div class="pb-3 mb-0 w-100">
         <div class="d-flex justify-content-between">
