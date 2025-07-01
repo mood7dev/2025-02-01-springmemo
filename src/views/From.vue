@@ -10,7 +10,7 @@ const refCtnts = useTemplateRef("ref_ctnts");
 
 const state = reactive({
   memo: {
-    memoid: 0,
+    memoId: 0,
     title: "",
     ctnts: "",
     createdAt: "",
@@ -49,24 +49,34 @@ const submit = async () => {
     return;
   }
 
-  console.log("호출");
   if (route.params.memoId) {
-    //수정처리
-    return;
-  }
-  const bodyJson = {
-    title: state.memo.title,
-    ctnts: state.memo.ctnts,
-  };
-  const data = await httpService.save(bodyJson);
-  if (data.resultData === 1) {
-    //등록 성공
-    router.push({ path: "/" });
+    // 수정 처리
+    const bodyJson = {
+      memoId: state.memo.memoId,
+      title: state.memo.title,
+      ctnts: state.memo.ctnts,
+    };
+    const data = await httpService.modify(bodyJson);
+    if (data.resultData === 1) {
+      alert("수정 성공");
+      router.push({ path: "/" });
+    } else {
+      alert(data.resultMessage);
+    }
   } else {
-    //등록실패
-    alert(data.resultMessage);
+    // 등록 처리
+    const bodyJson = {
+      title: state.memo.title,
+      ctnts: state.memo.ctnts,
+    };
+    const data = await httpService.save(bodyJson);
+    if (data.resultData === 1) {
+      alert("등록 성공");
+      router.push({ path: "/" });
+    } else {
+      alert(data.resultMessage);
+    }
   }
-  //등록처리
 };
 </script>
 
