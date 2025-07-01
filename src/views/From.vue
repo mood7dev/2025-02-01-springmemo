@@ -49,33 +49,24 @@ const submit = async () => {
     return;
   }
 
+  let data = null;
+  const bodyJson = {
+    title: state.memo.title,
+    ctnts: state.memo.ctnts,
+  };
   if (route.params.memoId) {
     // 수정 처리
-    const bodyJson = {
-      memoId: state.memo.memoId,
-      title: state.memo.title,
-      ctnts: state.memo.ctnts,
-    };
-    const data = await httpService.modify(bodyJson);
-    if (data.resultData === 1) {
-      alert("수정 성공");
-      router.push({ path: "/" });
-    } else {
-      alert(data.resultMessage);
-    }
+    bodyJson.memoId = state.memo.memoId;
+    data = await httpService.modify(bodyJson);
   } else {
     // 등록 처리
-    const bodyJson = {
-      title: state.memo.title,
-      ctnts: state.memo.ctnts,
-    };
-    const data = await httpService.save(bodyJson);
-    if (data.resultData === 1) {
-      alert("등록 성공");
-      router.push({ path: "/" });
-    } else {
-      alert(data.resultMessage);
-    }
+    data = await httpService.save(bodyJson);
+  }
+  if (data.resultData === 1) {
+    alert(route.params.memoId ? "수정 성공" : "등록 성공");
+    router.push({ path: "/" });
+  } else {
+    alert(data.resultMessage);
   }
 };
 </script>
