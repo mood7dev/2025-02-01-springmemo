@@ -1,29 +1,30 @@
 <script setup>
-import { onMounted, reactive } from "vue";
 import HttpService from "@/services/HttpService";
-// 상태관리: reactive로 memo 배열 선언
+import { onMounted, reactive } from "vue";
+
+// 상태관리: 메모리스트 호출!
 const state = reactive({
   memo: [],
 });
 
-// 초기 메모 조회: 컴포넌트가 마운트 될 때 findAll() 호출
+// 초기 메모 조회: 컴포넌트가 마운트 될 때 findAll() 호출!
 onMounted(() => {
-  console.log("호출!");
+  console.log("호출");
   findAll({});
 });
 
-// 메모 불러오기 함수: 서버에서 메모 리스트 가져오는 async 함수
+// 검색파트[1]: 서버에서 메모리스트(findAll)를 가져옴 :async()씀
 const findAll = async (params) => {
   const data = await HttpService.findAll(params);
   state.memo = data.resultData;
 };
 
-// 검색 버튼 클릭 시 findAll을 호출할 때 { searchText: '' } 객체 전달
+// 검색파트[2]: 객체 전달: model.searchText
 const model = {
   searchText: "",
 };
 
-// 검색 버튼 클릭 시 호출하는 함수 search() 작성
+// 검색파트[3]: 검색 버튼 클릭 시 호출하는 함수 search() 작성 :검색 버튼 클릭 시 findAll을 호출할 때 { searchText: '' }
 const search = () => {
   const params = { searchText: model.searchText };
   findAll(params);
@@ -35,8 +36,6 @@ const remove = async (id) => {
   if (!confirm("삭제하시겠습니까?")) {
     return;
   }
-  //서버 삭제 성공 신호
-  //최신 메모 리스트 다시 조회 : search() 호출
   const data = await HttpService.delete(id);
   if (data.resultData === 1) {
     search();

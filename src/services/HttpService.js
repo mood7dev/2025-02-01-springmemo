@@ -2,7 +2,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8080/api";
 
 class HttpService {
-  // 메모 저장 - POST 요청
+  // 메모 저장 - POST 요청 res = await axios
   async save(jsonBody) {
     const res = await axios.post("/memo", jsonBody);
     return res.data;
@@ -28,5 +28,9 @@ class HttpService {
     return res.data;
   }
   // deleteById(id) - id로 메모 삭제
+  async deleteById(id) {
+    const res = await axios.delete(`/memo?id=${id}`);
+    return res.data;
+  }
 }
 export default new HttpService();
