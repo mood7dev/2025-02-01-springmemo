@@ -6,36 +6,39 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 
-//메모 하나의 상세 데이터 저장용 객체
 const state = reactive({
   memo: {
     id: 0,
     title: "",
     content: "",
-    contentAt: "",
+    contentAT: "",
   },
 });
 
-//컴포넌트가 마운트될 때(페이지 열릴 때) 실행
 onMounted(async () => {
-  // URL에서 id 가져오기 : route
   const id = route.params.id;
-  // id로 API 요청해서 메모 데이터 받아오기 await
   const data = await HttpService.findById(id);
-  // 받아온 데이터 상태에 저장하기
   state.memo = data.resultData;
 });
 
-//수정 페이지로 이동하는 함수 moveToForm : 데이터 덮어씌우기
 const moveToForm = () => {
-  const json = JSON.stringify(state.memo); // Object to JSON (직렬화)
+  const json = JSON.stringify(state.memo);
   router.push({
     path: "/memo/add",
-    state: {
-      data: json,
-    },
+    state: { data: json },
   });
 };
+
+//메모 하나의 상세 데이터 저장용 객체
+
+//컴포넌트가 마운트될 때(페이지 열릴 때) 실행
+// [1].URL에서 id 가져오기 route
+// [2].id로 API 요청해서 메모 데이터 받아오기
+// [3].받아온 데이터 상태에 저장하기
+
+//수정 페이지로 이동하는 함수 moveToForm : 데이터 덮어씌우기
+//[1].직렬화
+//[2].router
 </script>
 
 <template>

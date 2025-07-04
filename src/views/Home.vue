@@ -1,46 +1,54 @@
 <script setup>
 import HttpService from "@/services/HttpService";
 import { onMounted, reactive } from "vue";
+import { useRouter } from "vue-router";
 
-// 상태관리: 메모리스트 호출!
+const router = useRouter();
+
 const state = reactive({
   memo: [],
 });
 
-// 초기 메모 조회: 컴포넌트가 마운트 될 때 findAll() 호출!
 onMounted(() => {
-  console.log("호출");
   findAll({});
 });
 
-// 검색파트[1]: 서버에서 메모리스트(findAll)를 가져옴 :async()씀
 const findAll = async (params) => {
   const data = await HttpService.findAll(params);
   state.memo = data.resultData;
 };
 
-// 검색파트[2]: 객체 전달: model.searchText
 const model = {
   searchText: "",
 };
 
-// 검색파트[3]: 검색 버튼 클릭 시 호출하는 함수 search() 작성 :검색 버튼 클릭 시 findAll을 호출할 때 { searchText: '' }
 const search = () => {
-  const params = { searchText: model.searchText };
+  const params = {
+    searchText: model.searchText,
+  };
   findAll(params);
 };
 
-// 삭제 기능: 메모 삭제 API 호출, 삭제 성공하면 목록 다시 조회
-//!confirm() 사용
 const remove = async (id) => {
   if (!confirm("삭제하시겠습니까?")) {
     return;
   }
+
   const data = await HttpService.delete(id);
   if (data.resultData === 1) {
     search();
   }
 };
+// 상태관리: 메모리스트 호출!
+
+// 초기 메모 조회: 컴포넌트가 마운트 될 때 findAll() 호출!
+
+// 검색파트[1]: 서버에서 메모리스트를 부르기, 데이터 덮어쓰기 :findAll 씀:async()씀
+// 검색파트[2]: 객체 전달: model.searchText
+// 검색파트[3]: 검색 버튼 클릭 시 호출하는 함수 search() 작성 :검색 버튼 클릭 시 findAll을 호출할 때 { searchText: '' }
+
+// 삭제 기능: 메모 삭제 API 호출, 삭제 성공하면 목록 다시 조회
+//!confirm() 사용
 </script>
 
 <template>
