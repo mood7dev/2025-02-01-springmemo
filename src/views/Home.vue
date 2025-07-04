@@ -1,16 +1,47 @@
 <script setup>
-// 상태관리: reactive로 memos 배열 선언
+import { onMounted, reactive } from "vue";
+import HttpService from "@/services/HttpService";
+// 상태관리: reactive로 memo 배열 선언
+const state = reactive({
+  memo: [],
+});
 
 // 초기 메모 조회: 컴포넌트가 마운트 될 때 findAll() 호출
+onMounted(() => {
+  console.log("호출!");
+  findAll({});
+});
 
 // 메모 불러오기 함수: 서버에서 메모 리스트 가져오는 async 함수
+const findAll = async (params) => {
+  const data = await HttpService.findAll(params);
+  state.memo = data.resultData;
+};
 
 // 검색 버튼 클릭 시 findAll을 호출할 때 { searchText: '' } 객체 전달
+const model = {
+  searchText: "",
+};
 
 // 검색 버튼 클릭 시 호출하는 함수 search() 작성
+const search = () => {
+  const params = { searchText: model.searchText };
+  findAll(params);
+};
 
 // 삭제 기능: 메모 삭제 API 호출, 삭제 성공하면 목록 다시 조회
-//최신 메모 리스트 다시 조회
+//!confirm() 사용
+const remove = async (id) => {
+  if (!confirm("삭제하시겠습니까?")) {
+    return;
+  }
+  //서버 삭제 성공 신호
+  //최신 메모 리스트 다시 조회 : search() 호출
+  const data = await HttpService.delete(id);
+  if (data.resultData === 1) {
+    search();
+  }
+};
 </script>
 
 <template>
@@ -32,8 +63,8 @@
     </div>
 
     <router-link
-      v-for="m in state.memos"
-      :to="`/memos/${m.id}`"
+      v-for="m in state.memo"
+      :to="`/memo/${m.id}`"
       class="item"
       :key="m.id"
     >
