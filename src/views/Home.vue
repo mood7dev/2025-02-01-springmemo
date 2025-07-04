@@ -1,9 +1,7 @@
 <script setup>
 import HttpService from "@/services/HttpService";
 import { onMounted, reactive } from "vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
+// 상태관리: 메모리스트 호출!
 
 const state = reactive({
   memo: [],
@@ -23,9 +21,7 @@ const model = {
 };
 
 const search = () => {
-  const params = {
-    searchText: model.searchText,
-  };
+  const params = { searchText: model.searchText };
   findAll(params);
 };
 
@@ -39,7 +35,6 @@ const remove = async (id) => {
     search();
   }
 };
-// 상태관리: 메모리스트 호출!
 
 // 초기 메모 조회: 컴포넌트가 마운트 될 때 findAll() 호출!
 

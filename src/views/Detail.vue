@@ -1,17 +1,17 @@
 <script setup>
 import HttpService from "@/services/HttpService";
 import { onMounted, reactive } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
-const route = useRoute();
 const router = useRouter();
+const route = useRoute();
 
 const state = reactive({
   memo: {
     id: 0,
     title: "",
     content: "",
-    contentAT: "",
+    contentAt: "",
   },
 });
 
@@ -25,7 +25,9 @@ const moveToForm = () => {
   const json = JSON.stringify(state.memo);
   router.push({
     path: "/memo/add",
-    state: { data: json },
+    state: {
+      data: json,
+    },
   });
 };
 

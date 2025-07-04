@@ -10,10 +10,11 @@ const state = reactive({
     id: 0,
     title: "",
     content: "",
-    contentAT: "",
+    contentAt: "",
   },
 });
 
+//디테일 뷰로 가자
 onMounted(() => {
   const passData = history.state.data;
   if (passData) {
@@ -44,7 +45,6 @@ const procSubmit = async () => {
     alert(data.resultMessage);
   }
 };
-
 // 상태 관리: 메모 객체 저장 (id, 제목, 내용, 생성일시)
 
 // 컴포넌트 마운트 시 (페이지 열릴 때) 이전 페이지에서 전달된 데이터가 있으면 받아서 state에 저장
@@ -52,7 +52,7 @@ const procSubmit = async () => {
 //넘어온 passData는 `문자열이므로 객체로 되돌림: JSON.parse`
 
 //procSubmit() "저장" 또는 "수정" 버튼을 눌렀을 때 실행되는 함수 /:수정만 Detail.vue로 가기
-//[1].입력된 베목과 내용을 객체 형태로 저장하기
+//[1].입력된 제목과 내용을 객체 형태로 저장하기
 //[2].홈으로 기본 이동 "/"
 //[3].수정이 완료된 후 이동할 경로(URL)
 //[4].어떤 메모를 수정하는지 서버에 알려주기

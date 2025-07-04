@@ -27,11 +27,6 @@ class HttpService {
     const res = await axios.get(`/memo/${id}`);
     return res.data;
   }
-
   // deleteById(id) - id로 메모 삭제
-  async deleteById(id) {
-    const res = await axios.delete(`/memo?id=${id}`);
-    return res.data;
-  }
 }
 export default new HttpService();
